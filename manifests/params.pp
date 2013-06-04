@@ -28,7 +28,11 @@ class nodejs::params {
         ''      => regsubst($::operatingsystemrelease,'^(\d+)\.(\d+)','\1'),
         default => $::lsbmajdistrelease,
       }
-      $node_pkg = 'nodejs-compat-symlinks'
+      if ($::operatingsystem == 'RedHat' or $::operatingsystem == 'CentOS') and $majdistrelease >= 6 {
+        $node_pkg = 'nodejs'
+      } else {
+        $node_pkg = 'nodejs-compat-symlinks'
+      }
       $npm_pkg  = 'npm'
       $baseurl  = 'http://patches.fedorapeople.org/oldnode/stable/el$releasever/$basearch/'
       $gpgcheck = $majdistrelease ? {
