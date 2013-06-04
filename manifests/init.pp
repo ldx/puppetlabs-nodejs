@@ -45,7 +45,7 @@ class nodejs(
         before => Yumrepo['nodejs-stable'],
       }
 
-      if ($::operatingsystem == 'RedHat' or $::operatingsystem == 'CentOS') and $::releasever < 6 {
+      if ($::operatingsystem == 'RedHat' or $::operatingsystem == 'CentOS') and $::majdistrelease < 6 {
         yumrepo { 'nodejs-stable':
           descr    => 'Stable releases of Node.js',
           baseurl  => $nodejs::params::baseurl,
