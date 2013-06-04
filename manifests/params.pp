@@ -28,6 +28,7 @@ class nodejs::params {
         ''      => regsubst($::operatingsystemrelease,'^(\d+)\.(\d+)','\1'),
         default => $::lsbmajdistrelease,
       }
+      notify { "OS major version is $majdistrelease": }
       if ($::operatingsystem == 'RedHat' or $::operatingsystem == 'CentOS') and $majdistrelease >= 6 {
         $node_pkg = 'nodejs'
       } else {
