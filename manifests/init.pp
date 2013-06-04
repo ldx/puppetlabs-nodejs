@@ -40,12 +40,12 @@ class nodejs(
     }
 
     'Fedora', 'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Amazon': {
-      package { 'nodejs-stable-release':
-        ensure => absent,
-        before => Yumrepo['nodejs-stable'],
-      }
-
       if ($::operatingsystem == 'RedHat' or $::operatingsystem == 'CentOS') and $nodejs::params::majdistrelease < 6 {
+        package { 'nodejs-stable-release':
+          ensure => absent,
+          before => Yumrepo['nodejs-stable'],
+        }
+
         yumrepo { 'nodejs-stable':
           descr    => 'Stable releases of Node.js',
           baseurl  => $nodejs::params::baseurl,
