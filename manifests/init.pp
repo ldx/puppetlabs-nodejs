@@ -45,13 +45,15 @@ class nodejs(
         before => Yumrepo['nodejs-stable'],
       }
 
-      yumrepo { 'nodejs-stable':
-        descr    => 'Stable releases of Node.js',
-        baseurl  => $nodejs::params::baseurl,
-        enabled  => 1,
-        gpgcheck => $nodejs::params::gpgcheck,
-        gpgkey   => 'http://patches.fedorapeople.org/oldnode/stable/RPM-GPG-KEY-tchol',
-        before   => Anchor['nodejs::repo'],
+      if ($::operatingsystem == 'RedHat' or $::operatingsystem == 'CentOS') and $::releasever < 6 {
+        yumrepo { 'nodejs-stable':
+          descr    => 'Stable releases of Node.js',
+          baseurl  => $nodejs::params::baseurl,
+          enabled  => 1,
+          gpgcheck => $nodejs::params::gpgcheck,
+          gpgkey   => 'http://patches.fedorapeople.org/oldnode/stable/RPM-GPG-KEY-tchol',
+          before   => Anchor['nodejs::repo'],
+        }
       }
     }
 
