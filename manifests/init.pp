@@ -41,6 +41,7 @@ class nodejs(
 
     'Fedora', 'RedHat', 'CentOS', 'OEL', 'OracleLinux', 'Amazon': {
       if ($::operatingsystem == 'RedHat' or $::operatingsystem == 'CentOS') and $nodejs::params::majdistrelease < 6 {
+        notify {"OS major version $nodejs::params::majdistrelease, using ext nodejs repo":}
         package { 'nodejs-stable-release':
           ensure => absent,
           before => Yumrepo['nodejs-stable'],
