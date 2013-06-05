@@ -45,6 +45,13 @@ class nodejs(
         before => Yumrepo['nodejs-stable'],
       }
 
+      if $::operatingsystem in ['RedHat', 'CentOS'] and $nodejs::params::majdistrelease >= 6 {
+        file_line { 'exclude EPEL package':
+          path => '/etc/yum.repos.d/epel.repo',
+          line => 'exclude=nodejs nodejs-dev npm',
+        }
+      }
+
       yumrepo { 'nodejs-stable':
         descr    => 'Stable releases of Node.js',
         baseurl  => $nodejs::params::baseurl,
